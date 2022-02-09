@@ -1,14 +1,22 @@
 .header {
   background-color: #fff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   height: 10rem;
   box-shadow: 0 .8rem .6rem -.6rem #ccc;
+  display: flex;
+  align-items: center;
 
-  .title {
-    font-size: 3rem;
-    color: #000;
-    letter-spacing: 0.5rem;
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 94rem;
+    max-width: 90vw;
+    margin: auto;
+
+    .title {
+      font-size: 3rem;
+      color: #000;
+      letter-spacing: 0.5rem;
+    }
   }
 }

@@ -1,16 +1,16 @@
-import {Route} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Details from "../views/details/Details";
 import ErrorPage from "../views/error-page/ErrorPage";
 import NotesList from "../views/notes-list/NotesList";
 
-const Routes = () => {
+const Routing = () => {
     return (
         <Routes>
-            <Route path="/" element={<NotesList/>}/>
+            <Route path="/" exact element={<NotesList/>} />
             <Route path="note-details" element={<Details/>}/>
-            <Route path="**" element={<ErrorPage/>}/>
+            <Route path="*" element={<ErrorPage/>}/>
         </Routes>
     );
 };
 
-export default Routes;
+export default Routing;

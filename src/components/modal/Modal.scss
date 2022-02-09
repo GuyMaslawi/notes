@@ -1,40 +1,58 @@
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 55;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .5);
+  width: 100%;
+  min-height: 100vh;
+
+  .content {
+    background-color: #fff;
+    padding: 2rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0, .5);
-    width: 100%;
-    min-height: 100vh;
+    flex-direction: column;
+    position: relative;
+    min-height: 30rem;
+    width: 50rem;
+    max-width: 90vw;
+    z-index: 56;
 
-    .content {
-        background-color: #fff;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        min-height: 30rem;
-        width: 60rem;
-        max-width: 90vw;
-
-        .close-button {
-            height: 3rem;
-            width: 3rem;
-            position: absolute;
-            left: .5rem;
-            top: .5rem;
-            color:rgba(0,0,0, .5);
-            cursor: pointer;
-        }
-
-        .title{
-            font-size: 3rem;
-        }
+    .close-button {
+      height: 3rem;
+      width: 3rem;
+      position: absolute;
+      left: .5rem;
+      top: .5rem;
+      color: rgba(0, 0, 0, .5);
+      cursor: pointer;
+      color: #000;
     }
+
+    .title {
+      font-size: 3rem;
+      text-align: center;
+    }
+
+    .add-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        width: 25rem;
+        font-size: 1.8rem;
+        margin-top: 3rem;
+
+        @media (max-width: 599px) {
+          width: 100%;
+        }
+      }
+    }
+  }
 }

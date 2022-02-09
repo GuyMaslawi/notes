@@ -9,15 +9,12 @@
   max-width: 90vw;
   margin: auto;
 
-  .empty-list {
+  .empty-list-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    &-text {
-      font-size: 3rem;
-      margin-bottom: 3rem;
-    }
+    font-size: 3rem;
+    margin-bottom: 3rem;
   }
 }

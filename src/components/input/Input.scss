@@ -7,4 +7,9 @@
     height: 5rem;
     border-radius: 1rem;
     margin-top: 3rem;
+    transition: all .3s;
+
+    &.textarea {
+        min-height: 15rem;
+    }
 }
