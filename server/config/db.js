@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
-const config = require('config');
-// const db = config('mongo_uri');
-const uri = "mongodb+srv://root:1234@cluster0.ouoo3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const db = "mongodb+srv://root:1234@cluster0.ouoo3.mongodb.net/social-dev?retryWrites=true&w=majority";
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(uri, {
+        await mongoose.connect(db, {
             useNewUrlParser: true
         });
         console.log('MongoDB Connected!!');
