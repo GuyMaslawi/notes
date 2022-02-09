@@ -1,0 +1,23 @@
+.notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 4rem 0;
+  width: 100rem;
+  max-width: 90vw;
+  margin: auto;
+
+  .empty-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-text {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+  }
+}

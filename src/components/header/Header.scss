@@ -1,0 +1,14 @@
+.header {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10rem;
+  box-shadow: 0 .8rem .6rem -.6rem #ccc;
+
+  .title {
+    font-size: 3rem;
+    color: #000;
+    letter-spacing: 0.5rem;
+  }
+}
