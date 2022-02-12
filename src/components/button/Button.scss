@@ -1,16 +1,19 @@
 .button {
-  background-color: #5e5df0;
+  background-color: #4CAF50;
   font-size: 1.5rem;
   border: 0;
-  box-shadow: #5e5df0 0 1rem 2rem -1rem;
+  box-shadow: #4CAF50 0 1rem 2rem -1rem;
   color: #fff;
   border-radius: 2.5rem;
+  border: .1rem solid #4CAF50;
   cursor: pointer;
   padding: 1rem;
   min-width: 10rem;
+  transition: all .3s ease;
 
   &:hover {
-    opacity: 0.9;
+    background-color: #fff;
+    color: #4CAF50;
   }
 }
 

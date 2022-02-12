@@ -1,0 +1,17 @@
+
+.alert {
+    min-height: 3rem;
+    width: fit-content;
+    padding: 1rem 2rem;
+    color: #fff;
+    text-align: center;
+    border-radius: .8rem;
+
+    &-success {
+        background-color: green;
+    }
+
+    &-danger {
+        background-color: red;
+    }
+}
