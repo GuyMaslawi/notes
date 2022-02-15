@@ -18,6 +18,15 @@
     align-items: center;
     position: relative;
 
+    @media (max-width: 767px) {
+      transform: rotate(0deg);
+    }
+
+    &.full-details {
+      width: 58rem;
+      max-width: 90vw;
+    }
+
     .title {
       font-size: 3rem;
       font-weight: bold;

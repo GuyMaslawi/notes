@@ -42,6 +42,7 @@ const Modal = () => {
         try {
             navigate('/notes-list');
             await api.delete(`/notes/delete/${currentNote._id}`);
+            localStorage.removeItem('currentNote');
             dispatch(setSuccess('Note deleted!'));
             handleCloseModal();
         } catch (err) {

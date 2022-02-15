@@ -21,7 +21,7 @@ const Note = ({data}) => {
 
     return (
         <div className="wrapper">
-            <div className="content">
+            <div className={isDetailsPage ? "content full-details" : "content"}>
                 <div className="delete-button">
                     <span className="material-icons md-36 delete"
                           onClick={() => handleNote(MODAL_TYPE.DELETE)}>delete</span>
@@ -29,7 +29,7 @@ const Note = ({data}) => {
                 <div className="title">{data.title}</div>
                 <div className={isDetailsPage ? "description" : "description hidden"}>{data.description}</div>
 
-                {data.description?.length > 80 &&
+                {data.description?.length > 80 && !isDetailsPage &&
                 <Link
                     style={{textDecoration: 'none'}}
                     to={`/note/${data._id}`}

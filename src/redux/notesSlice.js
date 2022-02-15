@@ -4,7 +4,7 @@ import api from "../axios/api";
 
 const initialState = {
     list: [],
-    currentNote: {},
+    currentNote: localStorage.getItem('currentNote'),
     isModalOpen: false,
     loading: false,
     modalType: MODAL_TYPE.ADD,
@@ -32,6 +32,7 @@ export const notesSlice = createSlice({
             return state;
         },
         setCurrentNote: (state, action) => {
+            localStorage.setItem('currentNote', JSON.stringify(action.payload));
             state.currentNote = action.payload;
         },
     },

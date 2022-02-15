@@ -10,9 +10,9 @@ const Details = () => {
         loading ?
             <Loader/>
             :
-           <div className="details">
-               <Note data={currentNote}/>
-           </div>
+            <div className="details">
+                <Note data={currentNote}/>
+            </div>
     );
 };
 
