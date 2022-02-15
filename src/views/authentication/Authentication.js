@@ -1,35 +1,47 @@
-import { useMemo } from "react";
+import {useCallback, useState, useMemo, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./register/Register";
+import Loader from "../../components/loader/Loader";
 import "./Authentication.scss";
-import { useCallback, useState } from "react";
 
 const Authentication = () => {
-  const [login, setLogin] = useState(false);
+    const dispatch = useDispatch();
+    const [loginPage, setLoginPage] = useState(true);
+    const {loading} = useSelector((state) => state.notes);
+    const {isAuthenticated} = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
-  const currentTitle = useMemo(() => (login ? "LOGIN" : "REGISTER"), [login]);
+    useEffect(() => {
+        if(isAuthenticated) {
+            navigate('/notes-list')
+        }
+    }, [dispatch, isAuthenticated, navigate]);
 
-  const currentComponent = useMemo(
-    () => (login ? <Login /> : <Register />),
-    [login]
-  );
+    const currentTitle = useMemo(() => (loginPage ? "LOGIN" : "REGISTER"), [loginPage]);
 
-  const currentFooter = useCallback(() => {
-    if (login) {
-      return <span onClick={() => setLogin(!login)}>Create User</span>;
-    }
-    return <span onClick={() => setLogin(!login)}>Login</span>;
-  }, [login]);
+    const currentComponent = useMemo(() => {
+        return loginPage ? <Login/> : <Register/>
+    }, [loginPage]);
 
-  return (
-    <div className="autheticate">
-      <div className="wrapper">
-        <h1 className="title">{currentTitle}</h1>
-        {currentComponent}
-        <div className="footer">{currentFooter()}</div>
-      </div>
-    </div>
-  );
+    const currentFooter = useCallback(() => {
+        if (loginPage) {
+            return <span onClick={() => setLoginPage(!loginPage)}>Register</span>;
+        }
+        return <span onClick={() => setLoginPage(!loginPage)}>Login</span>;
+    }, [loginPage]);
+
+    return (
+        <div className="authenticate">
+            {loading && <Loader/>}
+            <div className="wrapper">
+                <h1 className="title">{currentTitle}</h1>
+                {currentComponent}
+                <div className="footer">{currentFooter()}</div>
+            </div>
+        </div>
+    );
 };
 
 export default Authentication;

@@ -9,6 +9,10 @@
   max-width: 90vw;
   margin: auto;
 
+  @media (max-width: 767px) {
+    justify-content: center;
+  }
+
   .empty-list-text {
     display: flex;
     flex-direction: column;

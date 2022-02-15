@@ -1,49 +1,55 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { MODAL_TYPE } from "../constants/index";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {MODAL_TYPE} from "../constants/index";
+import api from "../axios/api";
 
 const initialState = {
-  list: [],
-  currentNote: {},
-  isModalOpen: false,
-  modalType: MODAL_TYPE.ADD,
+    list: [],
+    currentNote: {},
+    isModalOpen: false,
+    loading: false,
+    modalType: MODAL_TYPE.ADD,
 };
 
+export const fetchNotes = createAsyncThunk(
+    'notes/fetchNotes',
+    async (userId) => {
+        const response = await api.get(`notes/byUser/${userId}`);
+        return response.data;
+    }
+);
+
 export const notesSlice = createSlice({
-  name: "notes",
-  initialState,
-  reducers: {
-    addItem: (state, action) => {
-      const id = state.list.length + 1;
-      const { title, description } = action.payload;
-      state.list.push({ id, title, description });
+    name: "notes",
+    initialState,
+    reducers: {
+        handleModal: (state, action) => {
+            if (!action.payload) {
+                state.isModalOpen = false;
+            } else {
+                state.modalType = action.payload;
+                state.isModalOpen = true;
+            }
+            return state;
+        },
+        setCurrentNote: (state, action) => {
+            state.currentNote = action.payload;
+        },
     },
-    deleteItem: (state, action) => {
-      state.list = state.list.filter((i) => i.id !== action.payload);
-      state.currentNote = {};
-      return state;
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchNotes.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchNotes.fulfilled, (state, action) => {
+                state.loading = false;
+                state.list = action.payload;
+            })
+            .addCase(fetchNotes.rejected, (state) => {
+                state.loading = false;
+            })
     },
-    editItem: (state, action) => {
-      const { id, title, description } = action.payload;
-      const index = id - 1;
-      state.list[index].title = title;
-      state.list[index].description = description;
-    },
-    handleModal: (state, action) => {
-      if (!action.payload) {
-        state.isModalOpen = false;
-      } else {
-        state.modalType = action.payload;
-        state.isModalOpen = true;
-      }
-      return state;
-    },
-    setCurrentNote: (state, action) => {
-      state.currentNote = state.list.find((i) => i.id === action.payload.id);
-    },
-  },
 });
 
-export const { addItem, deleteItem, editItem, handleModal, setCurrentNote } =
-  notesSlice.actions;
+export const {deleteNote, handleModal, setCurrentNote} = notesSlice.actions;
 
 export default notesSlice.reducer;

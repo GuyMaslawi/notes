@@ -1,80 +1,104 @@
-import {useState} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addItem, deleteItem, editItem, handleModal} from "../../redux/notesSlice";
-import {MODAL_TYPE} from "../../constants/index";
+import {useForm} from "react-hook-form";
+import {handleModal} from "../../redux/notesSlice";
+import {MODAL_TYPE, ADD_NOTE_INPUTS} from "../../constants/index";
 import Button from "../button/Button";
 import Input from "../input/Input";
+import api from "../../axios/api";
+import {resetMessages, setErrors, setSuccess} from "../../redux/errorsSlice";
 import "./Modal.scss";
+import {useNavigate} from "react-router-dom";
 
-const Modal = ({open}) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+const Modal = () => {
+    const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {modalType, currentNote} = useSelector(state => state.notes);
+    const {user} = useSelector(state => state.auth);
+    const {errors, success} = useSelector(state => state.errors);
 
-    const handleTitle = (e) => setTitle(e.target.value);
+    useEffect(() => {
+        dispatch(resetMessages());
+    }, [dispatch]);
 
-    const handleDescription = (e) => setDescription(e.target.value);
+    const onSubmit = useCallback(async (data) => {
+        try {
+            const {title, description} = data;
+            await api.post('/notes/create', {user, title, description});
+            handleCloseModal();
+        } catch (err) {
+            dispatch(setErrors(err.response.data.errors));
+        }
+    }, [user]);
+
+    const currentTitle = useMemo(() => {
+        return modalType === MODAL_TYPE.DELETE ? "Delete Note" : "New Note"
+    }, [modalType]);
 
     const handleCloseModal = _ => dispatch(handleModal(false));
 
-    const handleAddItem = () => {
-        const obj = {title, description};
-        dispatch(addItem(obj));
-        handleCloseModal();
+    const handleDeleteNote = async () => {
+        try {
+            navigate('/notes-list');
+            await api.delete(`/notes/delete/${currentNote._id}`);
+            dispatch(setSuccess('Note deleted!'));
+            handleCloseModal();
+        } catch (err) {
+            dispatch(setErrors(err.response.data.errors));
+        }
     };
 
-    const handleEditItem = _ => {
-        const id = currentNote.id;
-        const obj = {id, title, description};
-        dispatch(editItem(obj));
-        dispatch(handleModal(false));
-    };
+    const renderInputs = ADD_NOTE_INPUTS.map((item) => {
+        return (
+            <Input
+                key={item.id}
+                type={item.type}
+                {...register(item.register)}
+                placeholder={item.placeholder}
+            />
+        );
+    });
 
-    const handleDeleteItem = _ => dispatch(deleteItem(currentNote.id))
+    const renderErrors = errors?.map((item, index) => {
+        return (
+            <div key={index}
+                 className="error-text">
+                {item.msg}
+            </div>
+        )
+    });
 
-    const currentTitle = modalType === MODAL_TYPE.DELETE ? "Delete Note" : "New Note";
-
-    return open ? (
+    return (
         <div className="modal">
             <div className="content">
                 <div className="close-button" onClick={handleCloseModal}>
                     X
                 </div>
                 <div className="title">{currentTitle}</div>
-                {modalType === MODAL_TYPE.ADD | modalType === MODAL_TYPE.EDIT &&
-                <div>
-                    <Input
-                        placeholder="Title"
-                        onChange={(e) => handleTitle(e)}
-                        value={title}
-                    />
-                    <Input
-                        placeholder="Description"
-                        onChange={(e) => handleDescription(e)}
-                        value={description}
-                        multiline
-                    />
+                {success}
+                {renderErrors}
+                {modalType === MODAL_TYPE.ADD &&
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    {renderInputs}
                     <div className="button-wrapper">
-                        <Button onClick={modalType === MODAL_TYPE.EDIT ? handleEditItem : handleAddItem}>
-                            {modalType === MODAL_TYPE.EDIT ? 'Save' : 'Add'}
-                        </Button>
+                        <Button type="submit">Add</Button>
                     </div>
-                </div>
+                </form>
                 }
 
                 {modalType === MODAL_TYPE.DELETE &&
-                <div>
-                    <div>Are you sure you want to delete this note?</div>
-                    <div className="button-wrapper">
-                        <Button onClick={handleDeleteItem}>Delete</Button>
-                        <Button onClick={handleCloseModal} isLink>Cancel</Button>
+                <div className="delete-content">
+                    <div className="delete-content-title">Are you sure you want to delete this note?</div>
+                    <div className="delete-content-buttons">
+                        <Button onClick={handleDeleteNote}>Delete</Button>
+                        <Button onClick={handleCloseModal} isLink className="cancel-button">Cancel</Button>
                     </div>
                 </div>
                 }
             </div>
         </div>
-    ) : null;
+    );
 };
 
 export default Modal;

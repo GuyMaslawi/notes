@@ -1,15 +1,15 @@
 
 .input {
-    border: .1rem solid #ccc;
-    padding: 1rem;
-    font-size: 1.5rem;
-    width: 100%;
-    height: 5rem;
-    border-radius: 1rem;
-    margin-top: 3rem;
-    transition: all .3s;
+  border: .1rem solid #ccc;
+  padding: 1rem;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 5rem;
+  border-radius: 1rem;
+  margin-top: 3rem;
+  transition: all .3s;
 
-    &.textarea {
-        min-height: 15rem;
-    }
+  &.textarea {
+    min-height: 15rem;
+  }
 }

@@ -1,51 +1,59 @@
 .wrapper {
-  flex-basis: 47%;
-  min-height: 10rem;
   display: flex;
-
-  @media (max-width: 599px) {
-    flex-basis: 100%;
-  }
-
-  .icons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin-right: .5rem;
-
-    .material-icons {
-      cursor: pointer;
-
-      &.delete {
-        color: red;
-      }
-
-      &.edit {
-        color: orange;
-      }
-    }
-  }
+  font-family: 'Reenie Beanie', cursive;
 
   .content {
-    background-color: #e7f3fe;
-    border-left: 0.6rem solid #2196f3;
+    background-color: #ffc;
+    color: #000;
+    padding: 1rem;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, .7);
+    transform: rotate(-6deg);
+    transition: transform .15s linear;
+    min-height: 20rem;
+    min-width: 20rem;
+    max-width: 35rem;
+    max-height: 90vh;
     display: flex;
-    width: 100%;
     flex-direction: column;
-    justify-content: center;
-    padding: 1rem 3rem;
-    border-top-right-radius: 2rem;
-    border-bottom-right-radius: 2rem;
-    box-shadow: rgba(0, 0, 0, .1) 0 .4rem .6rem -.1rem, rgba(0, 0, 0, 0.06) 0 .2rem .4rem -.1rem;
+    align-items: center;
+    position: relative;
 
     .title {
-      font-size: 2.4rem;
+      font-size: 3rem;
       font-weight: bold;
       margin-bottom: 1rem;
+      border-bottom: .1rem solid #41403E;
     }
 
     .description {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
+      &.hidden {
+        display: -webkit-box;
+        max-width: 200px;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    .delete-button {
+      position: absolute;
+      top: .5rem;
+      left: .5rem;
+      color: red;
+      cursor: pointer;
+    }
+
+    a {
+      color: #fff;
+      position: absolute;
+      bottom: .5rem;
+      right: .5rem;
+      font-size: 1.5rem;
+      text-decoration: none;
+      background-color: blue;
+      border-radius: 25rem;
+      padding: .5rem;
     }
   }
 

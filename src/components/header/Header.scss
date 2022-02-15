@@ -18,5 +18,23 @@
       color: #000;
       letter-spacing: 0.5rem;
     }
+
+    .log-out-button {
+      background-color: red;
+      font-size: 1.5rem;
+      box-shadow: red 0 1rem 2rem -1rem;
+      color: #fff;
+      border-radius: 2.5rem;
+      border: .1rem solid red;
+      cursor: pointer;
+      padding: 1rem;
+      min-width: 10rem;
+      transition: all .3s ease;
+
+      &:hover {
+        background-color: #fff;
+        color: red;
+      }
+    }
   }
 }

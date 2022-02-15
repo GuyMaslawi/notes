@@ -1,55 +1,77 @@
-import { useForm } from "react-hook-form";
+import {useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
-import { REGISTER_INPUTS } from "../../../constants/index";
+import {REGISTER_INPUTS} from "../../../constants/index";
 import api from "../../../axios/api";
-import { setAlert } from "../../../redux/alertsSlice";
+import {setAuthFail, setAuthSuccess} from "../../../redux/authSlice";
+import {resetMessages, setErrors, setSuccess} from "../../../redux/errorsSlice";
 
 const Register = () => {
-  const { register, handleSubmit } = useForm();
+    const {register, handleSubmit} = useForm();
+    const {errors, success} = useSelector(state => state.errors);
+    const dispatch = useDispatch();
 
-  const onSubmit = async (data) => {
-    if (data.password !== data.passwordRepeat) {
-      setAlert('danger', "passwords do not match!");
-    } else {
-      const { name, email, password } = data;
+    useEffect(() => {
+        dispatch(resetMessages());
+    }, [dispatch]);
 
-      const newUser = {
-        name,
-        email,
-        password,
-      };
+    const onSubmit = async (data) => {
+        if (data.password !== data.passwordRepeat) {
+            setErrors("passwords do not match!");
+        } else {
+            const {name, email, password} = data;
 
-      const body = JSON.stringify(newUser);
+            const newUser = {
+                name,
+                email,
+                password,
+            };
 
-      try {
-        const res = await api.post("/users/create_user", body);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
-    }
-  };
+            const body = JSON.stringify(newUser);
 
-  const renderInputs = REGISTER_INPUTS.map((item) => {
+            try {
+                const res = await api.post("/users/create_user", body);
+                dispatch(setSuccess('Registration Successful!'));
+                dispatch(setAuthSuccess(res.data));
+            } catch (err) {
+                dispatch(setErrors(err.response.data.errors));
+                dispatch(setAuthFail());
+            }
+        }
+    };
+
+    const renderInputs = REGISTER_INPUTS.map((item) => {
+        return (
+            <Input
+                key={item.id}
+                type={item.type}
+                {...register(item.register)}
+                placeholder={item.placeholder}
+            />
+        );
+    });
+
+    const renderErrors = errors?.map((item, index) => {
+        return (
+            <div key={index}
+                 className="error-text">
+                {item.msg}
+            </div>
+        )
+    });
+
     return (
-      <Input
-        key={item.id}
-        type={item.type}
-        {...register(item.register)}
-        placeholder={item.placeholder}
-      />
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="success-text">{success}</div>
+            {renderErrors}
+            {renderInputs}
+            <div className="action">
+                <Button type="submit">Register</Button>
+            </div>
+        </form>
     );
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {renderInputs}
-      <div className="action">
-        <Button type="submit">Register</Button>
-      </div>
-    </form>
-  );
 };
 
 export default Register;

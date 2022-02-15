@@ -1,4 +1,4 @@
-.autheticate {
+.authenticate {
   min-height: 100vh;
   width: 100vw;
   background-color: rgba(76, 175, 80, 0.6);
@@ -16,6 +16,18 @@
     display: flex;
     flex-direction: column;
     border-radius: 1rem;
+    font-family: Arial, serif;
+
+    .error-text {
+      color: red;
+      font-weight: bold;
+      font-size: 1.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .success-text{
+      color: green;
+    }
 
     .title {
       font-size: 3rem;

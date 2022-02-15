@@ -1,18 +1,18 @@
 import {useSelector} from "react-redux";
+import Loader from "../../components/loader/Loader";
+import Note from "../../components/note/Note";
 import './Details.scss';
 
 const Details = () => {
-    const {currentNote} = useSelector(state => state.notes);
+    const {loading, currentNote} = useSelector(state => state.notes);
 
     return (
-        <div className="details">
-            <h2 className="title">
-                {currentNote?.title}
-            </h2>
-            <div className="description">
-                {currentNote?.description}
-            </div>
-        </div>
+        loading ?
+            <Loader/>
+            :
+           <div className="details">
+               <Note data={currentNote}/>
+           </div>
     );
 };
 
