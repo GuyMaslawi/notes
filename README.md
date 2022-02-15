@@ -5,8 +5,10 @@ instructions:
 
 if you want to use exists users:
 
-username: "g@gmail.com"< /br>
+username: "g@gmail.com"
+
 password: "123123"
 
-username: "ggg@gmail.com"</ br>
+username: "ggg@gmail.com"
+
 password: "123123"
