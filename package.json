@@ -29,6 +29,10 @@
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "server": "nodemon server/index",
