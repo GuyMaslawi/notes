@@ -25,13 +25,14 @@
     "react-scripts": "5.0.0",
     "request": "^2.88.2",
     "sass": "^1.49.7",
+    "socket.io-client": "^4.4.1",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "server": "nodemon server/index",
-    "client": "npm start --prefix src/index",
+    "client": "npm start --prefix",
     "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "eslintConfig": {
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1"
   }
 }

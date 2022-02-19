@@ -7,12 +7,8 @@ const app = express();
 //Connect DB
 connectDB();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 app.use(express.json());
 
 //Define Routes
@@ -23,3 +19,4 @@ app.use("/auth", require("./routes/auth"));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

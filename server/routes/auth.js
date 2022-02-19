@@ -19,7 +19,7 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.post(
-  "/",
+  "/login",
   [
     check("email", "Email is invalid").isEmail(),
     check("password", "Password is required").exists(),
@@ -62,11 +62,10 @@ router.post(
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, payload });
         }
       );
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("Server Error");
     }
   }
