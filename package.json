@@ -34,6 +34,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "server": "nodemon server/index",
     "client": "npm start --prefix src/index",
     "dev": "concurrently \"npm run server\" \"npm run client\" "
